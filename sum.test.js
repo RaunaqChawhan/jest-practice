@@ -26,4 +26,70 @@ test('adding positive numbers is not zero', () => {
             expect(a + b).not.toBe(0);
         }
     }
-})
+});
+
+//Truthiness
+test('null', () => {
+    const n = null;
+    expect(n).toBeNull();
+    expect(n).toBeDefined();
+    expect(n).not.toBeUndefined();
+    expect(n).not.toBeTruthy();
+    expect(n).toBeFalsy();
+});
+
+//Numbers
+test('two plus two equals four', () => {
+    const value = 2 + 2;
+    expect(value).toBeGreaterThan(3);
+    expect(value).toBeGreaterThanOrEqual(3.5);
+    expect(value).toBeLessThan(5);
+    expect(value).toBeLessThanOrEqual(4.5);
+
+    //toBe and toEqual are equivalent for numbers
+    expect(value).toBe(4);
+    expect(value).toEqual(4);
+});
+
+//For floating point equality, use toBeCloseTo() instead of toEqual() in order to not have a test depend on a tiny rounding error
+test('adding floating point numbers', () => {
+    const value = 0.1 + 0.2; 
+    // expect(value).toEqual(0.3); this won't work because of rounding error
+    expect(value).toBeCloseTo(0.3);
+});
+
+//Strings
+//We can check strings against regular expressions with toMatch
+test('there is no I in team', () => {
+    expect('team').not.toMatch(/I/);
+});
+
+test('but there is a "stop" in Christoph', () => {
+    expect('Christoph').toMatch(/stop/);
+});
+
+//Arrays and iterables
+//We can check if an array or iterable contains a particular item using toContain()
+const shoppingList = [
+    'diapers',
+    'keenex',
+    'trash bags'
+];
+test('shopping list has diapers in it', () => {
+    expect(shoppingList).toContain('diapers');
+    expect(new Set(shoppingList)).toContain('diapers');
+});
+
+//Exceptions - If you want to test that a particular function throws an error when it's called, use toThrow
+function errorThrowExample() {
+    throw new Error('you are using an incompatible version');
+}
+
+test('incompatible version', () => {
+    expect(errorThrowExample).toThrow();
+    expect(errorThrowExample).toThrow(Error);
+
+    //we can also use the exact error message or a regex
+    expect(errorThrowExample).toThrow('you are using an incompatible version');
+    expect(errorThrowExample).toThrow(/version/);
+});
