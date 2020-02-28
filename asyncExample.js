@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 function fetchUserName(url, callback) {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -9,4 +11,12 @@ function fetchUserName(url, callback) {
     xhttp.send();
 }
 
-module.exports = fetchUserName;
+
+// Promise based
+function promiseUserName() {
+    return axios.get('https://jsonplaceholder.typicode.com/users/1')
+    .then(res => res.data);
+}
+
+
+module.exports = { fetchUserName, promiseUserName };

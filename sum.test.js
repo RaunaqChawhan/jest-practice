@@ -1,5 +1,5 @@
 const sum = require('./sum');
-const fetchUserName = require('./asyncExample');
+const { fetchUserName, promiseUserName } = require('./asyncExample');
 const axios = require('axios');
 
 test('adds 1 + 2 to equal 3', () => {
@@ -121,8 +121,19 @@ test('fetch User name', done => {
 
 //Promises
 test('test a promise', () => {
-    return axios.get('https://jsonplaceholder.typicode.com/users/1')
-            .then(res => {
-                expect(res.data.name).toMatch(/Leanne/);
+    expect.assertions(1);
+    return promiseUserName().then(res => {
+                expect(res.name).toMatch(/Leanne/);
             });
+});
+
+// .resolves / .rejects
+test('test the .resolves matcher', () => {
+    return expect(promiseUserName().then(res => res.name)).resolves.toMatch(/Leanne/);
+});
+
+// Async/Await
+test('async await test', async () => {
+    const data = await promiseUserName().then(res => res.name);
+    expect(data).toMatch(/Leanne/);
 });
