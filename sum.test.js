@@ -1,4 +1,5 @@
 const sum = require('./sum');
+const fetchUserName = require('./asyncExample');
 
 test('adds 1 + 2 to equal 3', () => {
     expect(sum(1,2)).toBe(3);
@@ -93,3 +94,27 @@ test('incompatible version', () => {
     expect(errorThrowExample).toThrow('you are using an incompatible version');
     expect(errorThrowExample).toThrow(/version/);
 });
+
+
+/***************************
+Testing Asynchronous code
+**************************/
+
+//In JavaScript, it is common to have asynchronous code. In order for Jest to move on to next test, it should know when the code it is testing has completed.
+//Jest has several ways to handle this
+
+//Callbacks
+test('fetch User name', done => {
+
+    function checkName(data) {
+        try {
+            expect(JSON.parse(data).name).toMatch(/Leanne/);
+            done();
+        } catch(error) {
+            done(error);
+        }  
+    }
+    
+    fetchUserName('https://jsonplaceholder.typicode.com/users/1', checkName);
+});
+
