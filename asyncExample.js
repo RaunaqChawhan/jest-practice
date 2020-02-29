@@ -15,7 +15,8 @@ function fetchUserName(url, callback) {
 // Promise based
 function promiseUserName() {
     return axios.get('https://jsonplaceholder.typicode.com/users/1')
-    .then(res => res.data);
+    .then(res => res.data)
+    .catch(error => 'error');
 }
 
 

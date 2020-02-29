@@ -134,6 +134,11 @@ test('test the .resolves matcher', () => {
 
 // Async/Await
 test('async await test', async () => {
-    const data = await promiseUserName().then(res => res.name);
-    expect(data).toMatch(/Leanne/);
+    const data = await promiseUserName();
+    expect(data.name).toMatch(/Leanne/);
 });
+
+
+//Helper functions
+//we make use of beforeEach() and afterEach() in order to have some setup work that needs to happen before tests run and some
+// finishing work that needs to happen after tests
